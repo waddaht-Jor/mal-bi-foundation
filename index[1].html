@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Mal enterprise BI foundation prototype using synthetic banking data." />
+  <title>Mal | Enterprise Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">M</span><div><strong>mal</strong><small>Enterprise Intelligence</small></div></div>
+    <nav aria-label="Primary">
+      <button class="nav-item active" data-view="executive"><span>◫</span> Executive</button>
+      <button class="nav-item" data-view="credit"><span>◇</span> Credit & Lending</button>
+      <button class="nav-item" data-view="conflict"><span>⇄</span> Metric resolution</button>
+      <button class="nav-item" data-view="dictionary"><span>☷</span> KPI dictionary</button>
+      <button class="nav-item" data-view="selfservice"><span>⌁</span> Self-service hub</button>
+    </nav>
+    <div class="sidebar-foot"><span class="status-dot"></span><div><strong>Data current</strong><small>15 Sep 2026 · 06:00 GST</small></div></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><p class="eyebrow">ENTERPRISE BI FOUNDATION / SYNTHETIC DATA</p><h1 id="page-title">Executive overview</h1></div>
+      <div class="top-actions"><label>Period <select id="period"><option value="12">Last 12 months</option><option value="6">Last 6 months</option><option value="3">Last 3 months</option></select></label><button id="export-btn">Export CSV</button></div>
+    </header>
+
+    <section id="executive" class="view active" aria-labelledby="page-title">
+      <div class="section-intro"><div><h2>Business health at a glance</h2><p>Certified enterprise KPIs across customer growth, lending, payments and savings.</p></div><span class="badge certified">✓ Certified view</span></div>
+      <div id="kpi-grid" class="kpi-grid"></div>
+      <div class="grid two-one">
+        <article class="card"><div class="card-head"><div><h3>Revenue & payment volume</h3><p>Monthly trend · AED millions</p></div><div class="legend"><span><i class="blue"></i>Net revenue</span><span><i class="mint"></i>Payment volume</span></div></div><div id="revenue-chart" class="chart"></div></article>
+        <article class="card"><div class="card-head"><div><h3>Customer mix</h3><p>Certified active customers</p></div></div><div id="mix-chart" class="donut-wrap"></div></article>
+      </div>
+      <div class="grid equal">
+        <article class="card"><div class="card-head"><div><h3>Lending performance</h3><p>Application-to-booking conversion</p></div></div><div id="mini-funnel" class="funnel compact"></div></article>
+        <article class="card"><div class="card-head"><div><h3>Management attention</h3><p>Rule-based signals from certified KPIs</p></div></div><div id="alerts"></div></article>
+      </div>
+    </section>
+
+    <section id="credit" class="view">
+      <div class="section-intro"><div><h2>Credit & Lending</h2><p>Origination, portfolio quality and forward-looking risk indicators.</p></div><span class="badge certified">✓ Credit Risk certified</span></div>
+      <div id="credit-kpis" class="kpi-grid four"></div>
+      <div class="grid equal">
+        <article class="card"><div class="card-head"><div><h3>Approval funnel</h3><p>September 2026 · unique applications</p></div></div><div id="credit-funnel" class="funnel"></div></article>
+        <article class="card"><div class="card-head"><div><h3>Portfolio quality</h3><p>Outstanding balance by delinquency band</p></div></div><div id="quality-chart" class="chart"></div></article>
+      </div>
+      <div class="grid two-one">
+        <article class="card"><div class="card-head"><div><h3>30+ DPD trend</h3><p>Risk indicator · balance-based rate</p></div><span class="target">Limit ≤ 3.0%</span></div><div id="dpd-chart" class="chart"></div></article>
+        <article class="card risk-card"><p class="eyebrow">EARLY-WARNING SIGNAL</p><div class="risk-score"><span>2.8%</span><em>↑ 0.4 pp</em></div><h3>New-to-bank 30+ DPD</h3><p>90-day-on-book cohort is approaching the 3.0% risk appetite threshold.</p><div class="meter"><i style="width:93%"></i></div><small>93% of risk limit consumed</small></article>
+      </div>
+    </section>
+
+    <section id="conflict" class="view">
+      <div class="section-intro"><div><h2>Metric conflict resolution</h2><p>One metric, three valid lenses, one governed enterprise definition.</p></div><span class="badge decision">Decision record · ADR-004</span></div>
+      <article class="conflict-hero"><p class="eyebrow">METRIC UNDER REVIEW</p><h2>Active customers · September 2026</h2><p>Different answers resulted from different activity windows, event types, and entity grains.</p></article>
+      <div id="definition-cards" class="definition-grid"></div>
+      <article class="card resolution"><div class="resolution-icon">✓</div><div><p class="eyebrow">CERTIFIED ENTERPRISE DEFINITION</p><h3>30-day transacting customers · 128,420</h3><p>A distinct, non-test customer with at least one <strong>settled customer-initiated monetary transaction</strong> in the trailing 30 calendar days, measured at 23:59 GST on the reporting date. Reversals, failed events, fees, interest postings and internal transfers are excluded.</p><div class="formula"><code>COUNT(DISTINCT customer_id) WHERE settled_at &gt; as_of_date - 30 days AND is_qualifying_activity = TRUE</code></div><div class="decision-row"><span><b>Owner</b> VP Product</span><span><b>Approver</b> CFO + CRO</span><span><b>Effective</b> 01 Sep 2026</span><span><b>Review</b> Quarterly</span></div></div></article>
+      <article class="card"><div class="card-head"><div><h3>Why this definition won</h3><p>Decision criteria agreed in the Metric Council</p></div></div><div class="criteria-grid"><div><b>Comparable</b><p>Stable across all products and reporting periods.</p></div><div><b>Auditable</b><p>Based on immutable settled transaction events.</p></div><div><b>Actionable</b><p>Represents genuine customer engagement.</p></div><div><b>Owned</b><p>Clear steward, approvers and review cycle.</p></div></div></article>
+    </section>
+
+    <section id="dictionary" class="view">
+      <div class="section-intro"><div><h2>KPI dictionary</h2><p>The contract between business meaning and technical implementation.</p></div><span id="metric-count" class="badge certified"></span></div>
+      <div class="toolbar"><input id="metric-search" type="search" placeholder="Search name, owner, source…"/><select id="domain-filter"><option value="all">All domains</option><option>Enterprise</option><option>Finance</option><option>Product</option><option>Credit</option><option>Payments</option><option>Savings</option></select><select id="status-filter"><option value="all">All statuses</option><option>Certified</option><option>Exploratory</option></select></div>
+      <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Domain owner</th><th>Business definition</th><th>Formula</th><th>Source</th><th>Refresh</th><th>Status</th></tr></thead><tbody id="dictionary-body"></tbody></table></div>
+    </section>
+
+    <section id="selfservice" class="view">
+      <div class="section-intro"><div><h2>Self-service analytics hub</h2><p>Find trusted data, understand access, and get help quickly.</p></div><span class="badge certified">Analytics Enablement</span></div>
+      <div class="grid equal datasets"><article class="card dataset"><span class="dataset-icon">C</span><div><h3>Customer 360</h3><p>Customer profile, onboarding, status and certified activity flags.</p><div><span>Grain: customer/day</span><span>Owner: Product Data</span></div><code>mart_customer_daily</code></div></article><article class="card dataset"><span class="dataset-icon violet">L</span><div><h3>Lending mart</h3><p>Applications, decisions, bookings, balances and delinquency.</p><div><span>Grain: facility/day</span><span>Owner: Credit Risk</span></div><code>mart_lending_daily</code></div></article><article class="card dataset"><span class="dataset-icon amber">P</span><div><h3>Payments mart</h3><p>Settled payment events, values, channels and merchant categories.</p><div><span>Grain: transaction</span><span>Owner: Payments</span></div><code>mart_payments</code></div></article><article class="card dataset"><span class="dataset-icon green">F</span><div><h3>Finance performance</h3><p>Revenue, direct costs and management P&L mappings.</p><div><span>Grain: GL account/day</span><span>Owner: Finance</span></div><code>mart_finance_daily</code></div></article></div>
+      <div class="grid two-one"><article class="card"><div class="card-head"><div><h3>Request access</h3><p>Three steps, with role-based approval</p></div></div><div class="steps"><div><b>1</b><span><strong>Choose a dataset</strong><small>Confirm the minimum fields and purpose.</small></span></div><div><b>2</b><span><strong>Submit the access form</strong><small>Manager and data owner approve sensitive fields.</small></span></div><div><b>3</b><span><strong>Complete data-use attestation</strong><small>Access is provisioned to your BI group.</small></span></div></div><button class="primary" id="request-access">Copy access-request template</button></article><article class="card sla"><h3>Service levels</h3><div><span>Standard access</span><b>2 business days</b></div><div><span>Sensitive fields</span><b>5 business days</b></div><div><span>Data incident triage</span><b>4 business hours</b></div><div><span>New certified KPI</span><b>10 business days</b></div><p>Support hours: Mon–Fri, 09:00–18:00 GST<br/>Channel: #data-help · Owner: BI Enablement</p></article></div>
+      <article class="card guardrails"><h3>Before you publish</h3><div><span>01</span><p><b>Use certified metrics first.</b><br/>Exploratory metrics must be labeled and cannot appear in executive reporting.</p></div><div><span>02</span><p><b>Protect customer data.</b><br/>Use aggregated outputs; never export direct identifiers without approval.</p></div><div><span>03</span><p><b>Document your logic.</b><br/>Add owner, grain, filters, refresh time and intended decision to every dashboard.</p></div></article>
+    </section>
+  </main>
+  <div id="toast" role="status"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
